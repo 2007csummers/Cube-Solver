@@ -1,5 +1,6 @@
 import numpy as np
 import copy
+import time
 
 class cube:
 
@@ -86,15 +87,15 @@ class part:
     #orientations is a list of lists of tuples. each inner list acts as a different orientation of the part
     def __init__(self, arr):
         self.mini_cubes = arr
-        self.orientations = self.orientations()
         self.part_number = part.num_parts
+        self.orientations = self.orientations()
         part.num_parts += 1
 
     def orientations(self):
         #using a composition of 0-3 of each of the rotation transform matrices, you can reach any of the possible position
-        rotxz = np.array([[0, 0, -1],
+        rotxz = np.array([[0, 0, 1],
                           [0, 1, 0],
-                          [1, 0, 0]])
+                          [-1, 0, 0]])
         
         rotyz = np.array([[1, 0, 0],
                           [0, 0, -1],
@@ -176,8 +177,10 @@ def main():
     c1 = cube(4, ps)
     print(c1)
     print("Solving... This may take a while")
+    start_time = time.time()
     c1.solve(c1.sorted_parts)
-    print("Solved!!!")
+    end_time = time.time()
+    print(f"Solved in {end_time - start_time} seconds")
     print("-------------------------------------------------------------")
     print(c1)
 
